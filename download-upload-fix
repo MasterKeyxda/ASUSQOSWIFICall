@@ -1,0 +1,4 @@
+#!/bin/sh
+
+iptables -t mangle -A FORWARD --src $(nvram get lan_ipaddr)/24 ! --dst $(nvram get lan_ipaddr)/24  -m mark ! --mark 0x40000000/0xc0000000 -j MARK --set-xmark 0x40000000/0xC0000000
+ip6tables -t mangle -A FORWARD --src $(nvram get ipv6_prefix)/64 ! --dst $(nvram get ipv6_prefix)/64 -m mark ! --mark 0x40000000/0xc0000000 -j MARK --set-xmark 0x40000000/0xC0000000
