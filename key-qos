@@ -13,11 +13,11 @@ ifconfig br0 txqueuelen 128
 
 tc qdisc replace dev eth0 root handle 1: prio
 tc qdisc add dev eth0 parent 1:1 handle 10: tbf rate 20Mbit latency 20ms burst 64kb mpu 82 mtu 20000
-tc qdisc add dev eth0 parent 10: handle 100: sfq headdrop
+tc qdisc add dev eth0 parent 10: handle 100: sfq headdrop quantum 300
 tc qdisc add dev eth0 parent 1:2 handle 11: tbf rate 20Mbit latency 20ms burst 512kb mpu 82 mtu 20000
-tc qdisc add dev eth0 parent 11: handle 110: sfq headdrop
+tc qdisc add dev eth0 parent 11: handle 110: sfq headdrop quantum 300
 tc qdisc add dev eth0 parent 1:3 handle 12: tbf rate 20Mbit latency 20ms burst 512kb mpu 82 mtu 20000
-tc qdisc add dev eth0 parent 12: handle 120: sfq headdrop
+tc qdisc add dev eth0 parent 12: handle 120: sfq headdrop quantum 300
 
 #tc qdisc replace dev br0 root handle 2: fq_codel limit 32 flows 1024 ecn
 tc qdisc replace dev br0 root handle 2: prio 
