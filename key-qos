@@ -47,17 +47,17 @@ tc qdisc replace dev br0 root handle 2: fq_codel flows 1024 ecn
 
 #Rehash everything with NAT support
 
-tc filter add dev eth0 parent 100: handle 111 pref 10 flow hash keys nfct-src,nfct-dst,proto,nfct-proto-src,nfct-proto-dst pe
-tc filter add dev eth0 parent 110: handle 112 pref 10 flow hash keys nfct-src,nfct-dst,proto,nfct-proto-src,nfct-proto-dst pe
-tc filter add dev eth0 parent 120: handle 113 pref 10 flow hash keys nfct-src,nfct-dst,proto,nfct-proto-src,nfct-proto-dst pe
+tc filter add dev eth0 parent 100: handle 111 pref 10 flow hash keys nfct-src,nfct-dst,proto,nfct-proto-src,nfct-proto-dst perturb 30 divisor 1024
+tc filter add dev eth0 parent 110: handle 112 pref 10 flow hash keys nfct-src,nfct-dst,proto,nfct-proto-src,nfct-proto-dst perturb 30 divisor 1024
+tc filter add dev eth0 parent 120: handle 113 pref 10 flow hash keys nfct-src,nfct-dst,proto,nfct-proto-src,nfct-proto-dst perturb 30 divisor 1024
 
 ###### FQ-CODEL #######
-tc filter add dev br0 parent 2: handle 2 pref 10 flow hash keys nfct-src,nfct-dst,proto,nfct-proto-src,nfct-proto-dst divisor
+tc filter add dev br0 parent 2: handle 2 pref 10 flow hash keys nfct-src,nfct-dst,proto,nfct-proto-src,nfct-proto-dst divisor 1024
 
 ###### SFQ #####
-#tc filter add dev br0 parent 20: handle 121 pref 10 flow hash keys nfct-src,nfct-dst,proto,nfct-proto-src,nfct-proto-dst per
-#tc filter add dev br0 parent 21: handle 122 pref 10 flow hash keys nfct-src,nfct-dst,proto,nfct-proto-src,nfct-proto-dst per
-#tc filter add dev br0 parent 22: handle 123 pref 10 flow hash keys nfct-src,nfct-dst,proto,nfct-proto-src,nfct-proto-dst per
+#tc filter add dev br0 parent 20: handle 121 pref 10 flow hash keys nfct-src,nfct-dst,proto,nfct-proto-src,nfct-proto-dst perturb 30 divisor 1024
+#tc filter add dev br0 parent 21: handle 122 pref 10 flow hash keys nfct-src,nfct-dst,proto,nfct-proto-src,nfct-proto-dst perturb 30 divisor 1024
+#tc filter add dev br0 parent 22: handle 123 pref 10 flow hash keys nfct-src,nfct-dst,proto,nfct-proto-src,nfct-proto-dst perturb 30 divisor 1024
 
 #tc filter add dev fwd0 parent 30: handle 111 pref 10 protocol all flow hash keys nfct-src,nfct-dst,proto,nfct-proto-src,nfct-proto-dst perturb 30 divisor 1024
 #tc filter add dev fwd0 parent 31: handle 112 pref 10 protocol all flow hash keys nfct-src,nfct-dst,proto,nfct-proto-src,nfct-proto-dst perturb 30 divisor 1024
